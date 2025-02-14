@@ -3,9 +3,11 @@ package br.com.devjoaopedro.helpdesk.entity;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import javax.management.relation.Role;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import br.com.devjoaopedro.helpdesk.entity.enums.Section;
+import br.com.devjoaopedro.helpdesk.entity.enums.Department;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -25,23 +27,17 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
     private String name;
-
-    @Column(nullable = false, unique = true)
     private String cpf;
-
-    @Column(nullable = false)
     private String phone;
-
-    @Column(nullable = false, unique = true)
     private String email;
-
-    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private Section section;
+    private Department department;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Column(name = "is_active")
     private Boolean isActive;
@@ -52,7 +48,7 @@ public class Employee {
     private LocalDate admission;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    @Column(name = "departure_date", nullable = true) // Pode ser nulo
+    @Column(name = "departure_date")
     private LocalDate departure;
 
 }

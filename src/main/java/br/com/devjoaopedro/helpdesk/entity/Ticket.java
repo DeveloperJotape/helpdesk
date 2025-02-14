@@ -1,11 +1,11 @@
 package br.com.devjoaopedro.helpdesk.entity;
 
+import br.com.devjoaopedro.helpdesk.entity.enums.Priority;
 import br.com.devjoaopedro.helpdesk.entity.enums.Status;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import org.apache.tomcat.util.http.parser.Priority;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;

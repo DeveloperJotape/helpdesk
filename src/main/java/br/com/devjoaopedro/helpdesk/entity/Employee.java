@@ -27,10 +27,19 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String cpf;
+
+    @Column(nullable = false)
     private String phone;
+
+    @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -42,11 +51,17 @@ public class Employee {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    /* Exemple: 24-11-2024 */
+    /**
+     * Data de admissão.
+     * Exemplo de exibição JSON: 14/02/2025
+     */
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @Column(name = "admission_date")
     private LocalDate admission;
 
+    /**
+     * Data de desligamento.
+     */
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @Column(name = "departure_date")
     private LocalDate departure;

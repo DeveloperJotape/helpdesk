@@ -11,6 +11,7 @@ import br.com.devjoaopedro.helpdesk.dto.EmployeeCreateDTO;
 import br.com.devjoaopedro.helpdesk.dto.EmployeeResponseDTO;
 import br.com.devjoaopedro.helpdesk.entity.Employee;
 import br.com.devjoaopedro.helpdesk.repository.EmployeeRepository;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class EmployeeService {
@@ -66,7 +67,7 @@ public class EmployeeService {
     // Lista por ID
     public EmployeeResponseDTO getById(UUID id) {
         Employee employee = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Colaborador não encontrado."));
+                .orElseThrow(() -> new EntityNotFoundException("Colaborador não encontrado."));
         return mapToResponseDTO(employee);
     }
 
@@ -81,7 +82,7 @@ public class EmployeeService {
     public EmployeeResponseDTO getByCpf(String cpf) {
         Employee employee = repository.findByCpf(cpf);
         if (employee == null) {
-            throw new RuntimeException("Colaborador não encontrado.");
+            throw new EntityNotFoundException("Colaborador não encontrado.");
         }
         return mapToResponseDTO(employee);
     }

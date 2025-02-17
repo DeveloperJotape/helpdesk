@@ -29,53 +29,59 @@ public class EmployeeController {
     private EmployeeService service;
 
     @PostMapping
-    @Operation(summary = "Cria um novo funcionário")
+    @Operation(summary = "Cria um novo funcionário.")
     public ResponseEntity<EmployeeResponseDTO> create(@RequestBody EmployeeCreateDTO dto) {
         EmployeeResponseDTO response = service.create(dto);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping
-    @Operation(summary = "Lista todos os funcionários")
+    @Operation(summary = "Lista todos os funcionários.")
     public ResponseEntity<List<EmployeeResponseDTO>> getAll() {
         return ResponseEntity.ok(service.getAll());
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Busca um funcionário pelo ID")
+    @Operation(summary = "Busca um funcionário pelo ID.")
     public ResponseEntity<EmployeeResponseDTO> getById(@PathVariable UUID id) {
         EmployeeResponseDTO response = service.getById(id);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/search")
-    @Operation(summary = "Busca funcionários pelo nome")
+    @Operation(summary = "Busca funcionários pelo nome.")
     public ResponseEntity<List<EmployeeResponseDTO>> getByName(@RequestParam String name) {
         return ResponseEntity.ok(service.getByName(name));
     }
 
+    @GetMapping("/cpf/{cpf}")
+    @Operation(summary = "Busca funcionário por CPF.")
+    public ResponseEntity<EmployeeResponseDTO> getByCpf(@PathVariable String cpf) {
+        return ResponseEntity.ok(service.getByCpf(cpf));
+    }
+
     @PutMapping("/{id}")
-    @Operation(summary = "Atualiza os dados de um funcionário")
+    @Operation(summary = "Atualiza os dados de um funcionário.")
     public ResponseEntity<EmployeeResponseDTO> update(@PathVariable UUID id, @RequestBody EmployeeCreateDTO dto) {
         EmployeeResponseDTO response = service.update(id, dto);
         return ResponseEntity.ok(response);
     }
 
     @PatchMapping("/{id}/activate")
-    @Operation(summary = "Ativa um funcionário")
+    @Operation(summary = "Ativa um funcionário.")
     public ResponseEntity<EmployeeResponseDTO> activate(@PathVariable UUID id) {
         return ResponseEntity.ok(service.activate(id));
 
     }
 
     @PatchMapping("/{id}/deactivate")
-    @Operation(summary = "Desativa um funcionário")
+    @Operation(summary = "Desativa um funcionário.")
     public ResponseEntity<EmployeeResponseDTO> deactivate(@PathVariable UUID id) {
         return ResponseEntity.ok(service.deactivate(id));
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Deleta um funcionário")
+    @Operation(summary = "Deleta um funcionário.")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();

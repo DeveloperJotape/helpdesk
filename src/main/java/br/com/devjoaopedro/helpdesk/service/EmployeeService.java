@@ -40,7 +40,7 @@ public class EmployeeService {
     // Atualização de funcionário
     public EmployeeResponseDTO update(UUID id, EmployeeCreateDTO dto) {
         Employee employee = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Colaborador não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Colaborador não encontrado."));
         employee.setName(dto.name());
         employee.setCpf(dto.cpf());
         employee.setPhone(dto.phone());
@@ -66,7 +66,7 @@ public class EmployeeService {
     // Lista por ID
     public EmployeeResponseDTO getById(UUID id) {
         Employee employee = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Colaborador não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Colaborador não encontrado."));
         return mapToResponseDTO(employee);
     }
 
@@ -76,6 +76,14 @@ public class EmployeeService {
                 .stream()
                 .map(this::mapToResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+    public EmployeeResponseDTO getByCpf(String cpf) {
+        Employee employee = repository.findByCpf(cpf);
+        if (employee == null) {
+            throw new RuntimeException("Colaborador não encontrado.");
+        }
+        return mapToResponseDTO(employee);
     }
 
     // Ativar funcionário

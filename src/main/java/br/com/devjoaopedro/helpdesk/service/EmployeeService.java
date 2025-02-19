@@ -32,7 +32,7 @@ public class EmployeeService {
         employee.setUserRole(dto.userRole());
         employee.setIsActive(dto.isActive());
         employee.setAdmission(dto.admissionDate());
-        employee.setDeparture(dto.departureDate());
+        employee.setDeparture(dto.departureDate() != null ? dto.departureDate() : null);
 
         repository.save(employee);
         return mapToResponseDTO(employee);
@@ -90,7 +90,7 @@ public class EmployeeService {
     // Ativar funcionário
     public EmployeeResponseDTO activate(UUID id) {
         Employee employee = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Colaborador não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Colaborador não encontrado"));
         employee.setIsActive(true);
         employee = repository.save(employee);
         return mapToResponseDTO(employee);
@@ -99,7 +99,7 @@ public class EmployeeService {
     // Desativar funcionário
     public EmployeeResponseDTO deactivate(UUID id) {
         Employee employee = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Colaborador não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Colaborador não encontrado"));
         employee.setIsActive(false);
         employee = repository.save(employee);
         return mapToResponseDTO(employee);

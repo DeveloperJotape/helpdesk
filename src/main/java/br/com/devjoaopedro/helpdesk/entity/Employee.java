@@ -63,7 +63,7 @@ public class Employee {
      * Data de desligamento.
      */
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    @Column(name = "departure_date")
+    @Column(name = "departure_date", nullable = true)
     private LocalDate departure;
 
     @PrePersist

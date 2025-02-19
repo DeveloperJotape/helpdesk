@@ -58,8 +58,7 @@ public class EmployeeController {
             @ApiResponse(responseCode = "404", description = "Colaborador não encontrado")
     })
     public ResponseEntity<EmployeeResponseDTO> getById(@PathVariable UUID id) {
-        EmployeeResponseDTO response = service.getById(id);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(service.getById(id));
     }
 
     @GetMapping("/name/{name}")

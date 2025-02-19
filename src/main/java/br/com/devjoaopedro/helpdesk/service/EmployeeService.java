@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import br.com.devjoaopedro.helpdesk.dto.EmployeeCreateDTO;
 import br.com.devjoaopedro.helpdesk.dto.EmployeeResponseDTO;
+import br.com.devjoaopedro.helpdesk.dto.TicketResponseDTO;
 import br.com.devjoaopedro.helpdesk.entity.Employee;
+import br.com.devjoaopedro.helpdesk.entity.Ticket;
 import br.com.devjoaopedro.helpdesk.repository.EmployeeRepository;
 import jakarta.persistence.EntityNotFoundException;
 
@@ -20,7 +22,6 @@ public class EmployeeService {
     private EmployeeRepository repository;
 
     // Cria funcionário
-    // TODO: Tirar duvidas sobre data de admissao e saída
     public EmployeeResponseDTO create(EmployeeCreateDTO dto) {
         Employee employee = new Employee();
         employee.setName(dto.name());
@@ -113,11 +114,25 @@ public class EmployeeService {
     }
 
     /*
-     * 
      * Método para mapear Employee para EmployeeResponseDTO
-     * 
      */
     private EmployeeResponseDTO mapToResponseDTO(Employee employee) {
+
+        /*
+         * Mapeia a lista de tickets que o colaborador abriu (ticketsOpened)
+         */
+        List<TicketResponseDTO> ticketsOpened = employee.getTicketsOpened() == null ? List.of()
+                : employee.getTicketsOpened().stream().map(this::mapTicketToResponseDTO).collect(Collectors.toList());
+
+        /*
+         * Mapeia a lista de tickets em que o colaborador foi designado
+         * (ticketsAssigned)
+         */
+        List<TicketResponseDTO> ticketsAssigned = employee.getTicketsAssigned() == null ? List.of()
+                : employee.getTicketsAssigned().stream()
+                        .map(this::mapTicketToResponseDTO)
+                        .collect(Collectors.toList());
+
         return new EmployeeResponseDTO(
                 employee.getId(),
                 employee.getName(),
@@ -128,7 +143,27 @@ public class EmployeeService {
                 employee.getUserRole(),
                 employee.getIsActive(),
                 employee.getAdmission(),
-                employee.getDeparture());
+                employee.getDeparture(),
+                ticketsOpened,
+                ticketsAssigned);
+    }
+
+    /*
+     * 
+     * Método auxiliar para mapear Ticket para TicketResponseDTO
+     * 
+     */
+    private TicketResponseDTO mapTicketToResponseDTO(Ticket ticket) {
+        return new TicketResponseDTO(
+                ticket.getId(),
+                ticket.getTitle(),
+                ticket.getDescription(),
+                ticket.getStartDate(),
+                ticket.getEndDate(),
+                ticket.getRequester().getName(), // Apenas o nome do requisitante
+                ticket.getRequested().getName(), // Apenas o nome do designado
+                ticket.getPriority(),
+                ticket.getStatus());
     }
 
 }

@@ -21,9 +21,11 @@ import br.com.devjoaopedro.helpdesk.service.EmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/employees")
+@Tag(name = "Colaboradores", description = "API para gerenciamento de chamados")
 public class EmployeeController {
 
     @Autowired
